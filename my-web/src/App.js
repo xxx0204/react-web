@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Button } from 'antd';
+import { Button, Input} from 'antd';
 
 class App extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          title:"click me"
+          title:"click me",
+          userName:""
       };
       this.loadingData.bind(this);
   }
   render() {
+      const { userName } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -22,14 +24,24 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <Button type="primary" size="small" onClick={this.loadingData}>{this.state.title}</Button>
+
+
+      <Input
+      placeholder="Enter your username"
+            value={userName}
+            onChange={this.onChangeUserName}
+        />
+
       </div>
     );
+  }
+  onChangeUserName = (e) => {
+      this.setState({ userName: e.target.value });
   }
 
   loadingData = (e) => {
       e.preventDefault();
-      // let url = 'http://web-test.com:8082//user/showUser';
-      let url = 'http://localhost:8082//user/showUser';
+      let url = 'http://localhost:8902/user/showUser';
       fetch(url, {
           method: 'POST',
           headers: {
@@ -39,7 +51,7 @@ class App extends Component {
       }).then(response => response.json()).then((res)=> {
           console.log(res);
           this.setState({
-              title:res['email']
+              title:res['userName']
           });
       });
     }
