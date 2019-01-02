@@ -45,9 +45,11 @@ class App extends Component {
       fetch(url, {
           method: 'POST',
           headers: {
-              "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+              // "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+              "Content-Type": "application/json; charset=UTF-8"
           },
-          body: 'id='+1,
+          mode:'cors',
+          cache:'default'
       }).then(response => response.json()).then((res)=> {
           console.log(res);
           this.setState({
