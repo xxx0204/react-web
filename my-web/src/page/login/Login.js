@@ -1,64 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './Login.css';
-import { Button, Input} from 'antd';
+import { Button, Input } from 'antd';
+import MyTabBar from '../tab/TabBar';
 
-export default class Login extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-          title: "login",
-          username: "",
-          password: ""
-      };
-      this.loadingData.bind(this);
-  }
-  render() {
-      const { username } = this.state;
-      const { password } = this.state;
+export default function Login() {
+    function onChangeUserName() {
+    }
+    function onChangePassword() {
+    }
+    function login() {
+        setTimeout(() => {
+            loginSuccess()
+        }, 3);
+    }
+    function loginSuccess() {
+        ReactDOM.render(<MyTabBar />, document.getElementById('root'));
+    }
+    //login logic 
     return (
-      <div className="Login">
-          <div className="Login-login-text">
-              <Input style={{width: 300}}
-                     placeholder="Enter your username"
-                     value={username}
-                     onChange={this.onChangeUserName}
-              />
-              <br />
-              <Input.Password style={{width: 300, alignItems: 'flex-start', justifyContent: 'flex-start'}}
-                     placeholder="Enter your password"
-                     value={password}
-                     visibilityToggle={true}
-                     onChange={this.onChangePassword}
-              />
-              <br />
-              <Button type="primary" onClick={this.loadingData}>{this.state.title}</Button>
-          </div>
-      </div>
+        <div className="Login">
+            <div className="Login-login-text">
+                <Input style={{ width: 300 }}
+                    placeholder="Enter your username"
+                    value={""}
+                    onChange={onChangeUserName}
+                />
+                <br />
+                <Input.Password style={{ width: 300, alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    placeholder="Enter your password"
+                    value={""}
+                    visibilityToggle={true}
+                    onChange={onChangePassword}
+                />
+                <br />
+                <Button type="primary" onClick={login}>{'sss'}</Button>
+            </div>
+        </div>
     );
-  }
-  onChangeUserName = (e) => {
-      this.setState({ username: e.target.value });
-  }
-    onChangePassword = (e) => {
-        this.setState({ password: e.target.value });
-    }
-
-  loadingData = (e) => {
-      e.preventDefault();
-      let url = 'http://localhost:8902/user/showUser';
-      fetch(url, {
-          method: 'POST',
-          headers: {
-              // "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-              "Content-Type": "application/json; charset=UTF-8"
-          },
-          mode:'cors',
-          cache:'default'
-      }).then(response => response.json()).then((res)=> {
-          console.log(res);
-          this.setState({
-              title:res['username']
-          });
-      });
-    }
 }
